@@ -4,6 +4,8 @@
 // C++
 #include <set>
 #include <map>
+#include <ctime>
+#include <csignal>
 
 // QtCore
 #include <QtCore/qglobal.h>
@@ -155,6 +157,43 @@
 #if defined(Q_OS_WIN32)
 #include <Windows.h>
 #endif
+
+
+
+// POSIX定义
+typedef		char				x_int8_t;
+typedef		unsigned char			x_uint8_t;
+typedef		short				x_int16_t;
+typedef		unsigned short			x_uint16_t;
+typedef		int				x_int32_t;
+typedef		unsigned int			x_uint32_t;
+typedef		long long			x_int64_t;
+typedef		unsigned long long		x_uint64_t;
+#if defined(__x86_64__) || defined(__amd64__) || defined(_WIN64) || defined(__aarch64__)
+typedef		long long			x_ssize_t;
+typedef		unsigned long long		x_size_t;
+#else
+typedef		int				x_ssize_t;
+typedef		unsigned int			x_size_t;
+#endif
+typedef 	x_size_t			x_pos_type;
+typedef 	x_ssize_t			x_diff_type;
+typedef 	x_int64_t			x_time_type;
+#if defined(_MSC_VER)
+#define 	x_posix_msleep(x)		Sleep(x)
+#else
+#define 	x_posix_msleep(x)		usleep((x) * 1000)
+#endif
+
+
+
+// 宏定义 - 快捷调用
+#define		XL_MUTEX_LOCKER(_Mutex)		std::lock_guard<std::mutex>	std_mutex_locker(_Mutex)
+
+
+
+// OpenXL - 类型定义
+typedef 	x_uint64_t			XL_TASK_ID;
 
 
 

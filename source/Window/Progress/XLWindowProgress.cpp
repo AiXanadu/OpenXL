@@ -1,5 +1,6 @@
 ﻿#include <source/Window/Progress/XLWindowProgress.h>
 #include "ui_XLWindowProgress.h"
+#include <source/Window/Progress/XLWindowProgressItem.h>
 
 
 

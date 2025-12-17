@@ -2,6 +2,53 @@
 
 
 
+// [main] 运行环境 - 文件句柄
+#if defined(Q_OS_WIN32) && defined(XL_BUILD_DEBUG)
+static FILE*		static_debug_console = nullptr;
+#endif
+
+// [main] 运行环境 - 初始化
+static void XL_Main_App_Env_Init() noexcept
+{
+#if defined(Q_OS_WIN32)
+	WSADATA		vWsaData;
+	WSAStartup(MAKEWORD(2, 2), &vWsaData);
+	OleInitialize(nullptr);
+#if defined(XL_BUILD_DEBUG)
+	AllocConsole();
+	SetConsoleTitleW(L"OpenXL Debug Console");
+	SetWindowPos(GetConsoleWindow(), HWND_TOP, 10, 10, 0, 0, SWP_NOSIZE);
+	static_debug_console = freopen("CONOUT$", "w+t", stdout);
+#endif
+#else
+	signal(SIGPIPE, SIG_IGN);
+	signal(SIGSEGV, SIG_IGN);
+#endif
+
+	setlocale(LC_ALL, "chs");
+	srand((uint32_t)time(nullptr));
+}
+
+// [main] 运行环境 - 释放
+static void XL_Main_App_Env_Fini() noexcept
+{
+#if defined(Q_OS_WIN32)
+#if defined(XL_BUILD_DEBUG)
+	if(static_debug_console)
+	{
+		fclose(static_debug_console);
+		static_debug_console = nullptr;
+	}
+	FreeConsole();
+	SendMessageW(GetConsoleWindow(), WM_CLOSE, 0, 0);
+#endif
+	OleUninitialize();
+	WSACleanup();
+#endif
+}
+
+
+
 // [main] 启用HDPI支持
 static void XL_Main_Enable_HDPI_Support() noexcept
 {
@@ -75,12 +122,14 @@ static void XL_Main_Enable_HDPI_Support() noexcept
 // 入口点
 int main(int _Argc, char* _Argv[])
 {
+	XL_Main_App_Env_Init();
 	XL_Main_Enable_HDPI_Support();
-	QApplication	app(_Argc, _Argv);
+	QApplication	vApp(_Argc, _Argv);
 
-	XLWindowMain	w(nullptr);
-	w.resize(2000, 1500);
-	w.show();
+	XLWindowMain	vMainView(nullptr);
+	vMainView.show();
 
-	return QApplication::exec();
+	auto		vSyncI = QApplication::exec();
+	XL_Main_App_Env_Fini();
+	return vSyncI;
 }

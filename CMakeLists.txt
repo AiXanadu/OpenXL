@@ -78,17 +78,12 @@ set(CMAKE_AUTOCRAT ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
-# C++支持
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-
 # 设置宏
-add_definitions(-DXLSX_NO_LIB)
+add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-	add_definitions(-DXANADU_BUILD_DEBUG)
+	add_definitions(-DXL_BUILD_DEBUG)
 else ()
-	add_definitions(-DXANADU_BUILD_RELEASE)
+	add_definitions(-DXL_BUILD_RELEASE)
 endif ()
 
 
