@@ -2,7 +2,7 @@
 
 
 // constructor
-XLMessageThread::XLMessageThread(QObject* _Parent, XL_TASK_ID _TaskId, bool _Release) noexcept : QThread(_Parent), XLMessageCore(_TaskId)
+XLMessageThread::XLMessageThread(QObject* _Parent, const XL_TASK_SHARED& _TaskS, bool _Release) noexcept : QThread(_Parent), XLMessageCore(_TaskS)
 {
 	if (_Release)
 	{

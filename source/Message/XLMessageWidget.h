@@ -11,7 +11,7 @@ class XLMessageWidget : public QWidget, public XLMessageCore
 
 public:
 	// constructor
-	XLMessageWidget(QWidget* _Parent, XL_TASK_ID _TaskId, bool _Release) noexcept;
+	XLMessageWidget(QWidget* _Parent, const XL_TASK_SHARED& _TaskS, bool _Release) noexcept;
 
 	// destructor
 	~XLMessageWidget() noexcept override;

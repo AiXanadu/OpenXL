@@ -11,7 +11,7 @@ class XLMessageDialog : public QDialog, public XLMessageCore
 
 public:
 	// constructor
-	XLMessageDialog(QWidget* _Parent, XL_TASK_ID _TaskId, bool _Release) noexcept;
+	XLMessageDialog(QWidget* _Parent, const XL_TASK_SHARED& _TaskS, bool _Release) noexcept;
 
 	// destructor
 	~XLMessageDialog() noexcept override;

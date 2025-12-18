@@ -2,6 +2,7 @@
 #define			_XL_MESSAGE_CORE_H_
 
 #include <source/XLWindowHeader.h>
+#include <source/Task/XLTaskManager.h>
 #include <source/Message/XLMessageDefine.h>
 #include <source/Message/XLMessageObserver.h>
 
@@ -17,17 +18,20 @@ private:
 
 public:
 	// constructor
-	explicit XLMessageCore(XL_TASK_ID _TaskId) noexcept;
+	explicit XLMessageCore(const XL_TASK_SHARED& _TaskS) noexcept;
 
 	// destructor
 	virtual ~XLMessageCore() noexcept;
 
 public:
-	// [set] 任务ID
-	virtual void taskId(XL_TASK_ID _TaskId) noexcept final;
-
-	// [set] 任务ID
+	// [get] 任务ID
 	virtual XL_TASK_ID taskId() const noexcept final;
+
+	// [set] 任务对象
+	virtual void taskShared(const XL_TASK_SHARED& _TaskS) noexcept final;
+
+	// [get] 任务对象
+	virtual const XL_TASK_SHARED& taskShared() const noexcept final;
 
 protected:
 	// [get] 判断窗口是否初始化
@@ -63,43 +67,47 @@ public:
 	virtual void windowInitialize() noexcept;
 
 public:
-	// [case] 主题更新
+	// [msg] 主题更新
 	virtual void messageSoftwareSkin() noexcept;
 
-	// [case] 语言切换
+	// [msg] 语言切换
 	virtual void messageSoftwareLanguage() noexcept;
 
-	// [case] 窗口显示
+	// [msg] 窗口显示
 	virtual void messageSoftwareShow() noexcept;
 
-	// [case] 窗口隐藏
+	// [msg] 窗口隐藏
 	virtual void messageSoftwareHide() noexcept;
 
-	// [case] 窗口最小化
+	// [msg] 窗口最小化
 	virtual void messageSoftwareMinimize() noexcept;
 
-	// [case] 窗口还原
+	// [msg] 窗口还原
 	virtual void messageSoftwareRestore() noexcept;
 
-	// [case] 窗口最大化
+	// [msg] 窗口最大化
 	virtual void messageSoftwareMaximize() noexcept;
 
-	// [case] 窗口销毁
+	// [msg] 窗口销毁
 	virtual void messageSoftwareDestroy() noexcept;
 
 public:
-	// [case] 页面切换
+	// [msg] 页面切换
 	virtual void messageWindowSwitch_1(x_uint64_t _Level_1) noexcept;
 
 public:
-	// [case] 帐号登录
+	// [msg] 帐号登录
 	virtual void messageUserLogin() noexcept;
 
-	// [case] 帐号切换
+	// [msg] 帐号切换
 	virtual void messageUserSwitch() noexcept;
 
-	// [case] 帐号退出
+	// [msg] 帐号退出
 	virtual void messageUserExit() noexcept;
+
+public:
+	// [msg] 任务更新
+	virtual void messageTaskUpdate() noexcept;
 };
 
 #endif

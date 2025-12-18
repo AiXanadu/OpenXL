@@ -2,7 +2,7 @@
 
 
 // constructor
-XLMessageFrame::XLMessageFrame(QWidget* _Parent, XL_TASK_ID _TaskId, bool _Release) noexcept : QFrame(_Parent), XLMessageCore(_TaskId)
+XLMessageFrame::XLMessageFrame(QWidget* _Parent, const XL_TASK_SHARED& _TaskS, bool _Release) noexcept : QFrame(_Parent), XLMessageCore(_TaskS)
 {
 	this->setAttribute(Qt::WA_DeleteOnClose, _Release);
 	QObject::connect(this, &XLMessageFrame::signalObserverMessage, this, &XLMessageFrame::receiveObserverMessage, Qt::QueuedConnection);

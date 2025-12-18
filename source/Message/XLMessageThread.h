@@ -11,7 +11,7 @@ Q_OBJECT
 
 public:
 	// constructor
-	XLMessageThread(QObject* _Parent, XL_TASK_ID _TaskId, bool _Release) noexcept;
+	XLMessageThread(QObject* _Parent, const XL_TASK_SHARED& _TaskS, bool _Release) noexcept;
 
 	// destructor
 	~XLMessageThread() noexcept override;

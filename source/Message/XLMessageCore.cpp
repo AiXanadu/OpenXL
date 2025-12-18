@@ -5,8 +5,8 @@
 // 消息 - 核心
 struct PKMessageCore
 {
-	// 任务ID
-	XL_TASK_ID					taskId = 0;
+	// 任务对象
+	XL_TASK_SHARED					taskShared = nullptr;
 
 	// 监听通知列表
 	std::set<x_uint64_t>				listenArray;
@@ -21,10 +21,10 @@ struct PKMessageCore
 
 
 // constructor
-XLMessageCore::XLMessageCore(XL_TASK_ID _TaskId) noexcept
+XLMessageCore::XLMessageCore(const XL_TASK_SHARED& _TaskS) noexcept
 {
 	d_ptr = new(std::nothrow) PKMessageCore();
-	d_ptr->taskId = _TaskId;
+	d_ptr->taskShared = _TaskS;
 }
 
 // destructor
@@ -37,16 +37,22 @@ XLMessageCore::~XLMessageCore() noexcept
 
 
 
-// [set] 任务ID
-void XLMessageCore::taskId(XL_TASK_ID _TaskId) noexcept
-{
-	d_ptr->taskId = _TaskId;
-}
-
-// [set] 任务ID
+// [get] 任务ID
 XL_TASK_ID XLMessageCore::taskId() const noexcept
 {
-	return d_ptr->taskId;
+	return nullptr == d_ptr->taskShared ? 0 : d_ptr->taskShared->taskId;
+}
+
+// [set] 任务对象
+void XLMessageCore::taskShared(const XL_TASK_SHARED& _TaskS) noexcept
+{
+	d_ptr->taskShared = _TaskS;
+}
+
+// [get] 任务对象
+const XL_TASK_SHARED& XLMessageCore::taskShared() const noexcept
+{
+	return d_ptr->taskShared;
 }
 
 
@@ -113,8 +119,10 @@ void XLMessageCore::observerMessageSend(x_uint64_t _Message, x_uint64_t _Param1,
 // [opt] 消息处理
 void XLMessageCore::observerMessageHandle(x_uint64_t _Message, x_uint64_t _Param1, x_uint64_t _Param2) noexcept
 {
-	Q_UNUSED(_Param1);
 	Q_UNUSED(_Param2);
+#define 		vTaskId					((XL_TASK_ID)_Param1)
+// #define 		vFExist					(XLTaskManager::exist(vTaskId))
+#define 		vFMatch					((0 != vTaskId) && (XLMessageCore::taskId() == vTaskId))
 	switch(_Message)
 	{
 		case XLM_SOFTWARE_SKIN:				messageSoftwareSkin();						break;
@@ -131,6 +139,8 @@ void XLMessageCore::observerMessageHandle(x_uint64_t _Message, x_uint64_t _Param
 		case XLM_USER_LOGIN:				messageUserLogin();						break;
 		case XLM_USER_SWITCH:				messageUserSwitch();						break;
 		case XLM_USER_EXIT:				messageUserExit();						break;
+
+		case XLM_TASK_UPDATE:				if(vFMatch){	messageTaskUpdate();	}			break;
 
 		default:													break;
 	}
@@ -150,49 +160,49 @@ void XLMessageCore::windowInitialize() noexcept
 
 
 
-// [case] 主题更新
+// [msg] 主题更新
 void XLMessageCore::messageSoftwareSkin() noexcept
 {
 }
 
-// [case] 语言切换
+// [msg] 语言切换
 void XLMessageCore::messageSoftwareLanguage() noexcept
 {
 }
 
-// [case] 窗口显示
+// [msg] 窗口显示
 void XLMessageCore::messageSoftwareShow() noexcept
 {
 }
 
-// [case] 窗口隐藏
+// [msg] 窗口隐藏
 void XLMessageCore::messageSoftwareHide() noexcept
 {
 }
 
-// [case] 窗口最小化
+// [msg] 窗口最小化
 void XLMessageCore::messageSoftwareMinimize() noexcept
 {
 }
 
-// [case] 窗口还原
+// [msg] 窗口还原
 void XLMessageCore::messageSoftwareRestore() noexcept
 {
 }
 
-// [case] 窗口最大化
+// [msg] 窗口最大化
 void XLMessageCore::messageSoftwareMaximize() noexcept
 {
 }
 
-// [case] 窗口销毁
+// [msg] 窗口销毁
 void XLMessageCore::messageSoftwareDestroy() noexcept
 {
 }
 
 
 
-// [case] 页面切换
+// [msg] 页面切换
 void XLMessageCore::messageWindowSwitch_1(x_uint64_t _Level_1) noexcept
 {
 	Q_UNUSED(_Level_1);
@@ -200,17 +210,24 @@ void XLMessageCore::messageWindowSwitch_1(x_uint64_t _Level_1) noexcept
 
 
 
-// [case] 帐号登录
+// [msg] 帐号登录
 void XLMessageCore::messageUserLogin() noexcept
 {
 }
 
-// [case] 帐号切换
+// [msg] 帐号切换
 void XLMessageCore::messageUserSwitch() noexcept
 {
 }
 
-// [case] 帐号退出
+// [msg] 帐号退出
 void XLMessageCore::messageUserExit() noexcept
+{
+}
+
+
+
+// [msg] 任务更新
+void XLMessageCore::messageTaskUpdate() noexcept
 {
 }

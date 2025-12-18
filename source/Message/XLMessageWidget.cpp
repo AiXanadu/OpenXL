@@ -2,7 +2,7 @@
 
 
 // constructor
-XLMessageWidget::XLMessageWidget(QWidget* _Parent, XL_TASK_ID _TaskId, bool _Release) noexcept : QWidget(_Parent), XLMessageCore(_TaskId)
+XLMessageWidget::XLMessageWidget(QWidget* _Parent, const XL_TASK_SHARED& _TaskS, bool _Release) noexcept : QWidget(_Parent), XLMessageCore(_TaskS)
 {
 	this->setAttribute(Qt::WA_DeleteOnClose, _Release);
 	this->setMouseTracking(true);

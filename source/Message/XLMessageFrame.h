@@ -12,7 +12,7 @@ class XLMessageFrame : public QFrame, public XLMessageCore
 
 public:
 	// constructor
-	XLMessageFrame(QWidget* _Parent, XL_TASK_ID _TaskId, bool _Release) noexcept;
+	XLMessageFrame(QWidget* _Parent, const XL_TASK_SHARED& _TaskS, bool _Release) noexcept;
 
 	// destructor
 	~XLMessageFrame() noexcept override;
