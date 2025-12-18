@@ -192,6 +192,13 @@ typedef 	x_int64_t			x_time_type;
 
 
 
+// 大小定义
+#define 	XL_SIZE_KB			(1024)
+#define 	XL_SIZE_MB			(XL_SIZE_KB * 1024)
+#define 	XL_SIZE_GB			(XL_SIZE_MB * 1024)
+
+
+
 // OpenXL - 类型定义
 typedef 	x_uint64_t			XL_TASK_ID;
 
