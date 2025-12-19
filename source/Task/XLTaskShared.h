@@ -47,6 +47,18 @@ public:
 	// 下载进度
 	double 					downloadProgress = 0.0f;
 
+	// 文件URL
+	QString					fileUri;
+
+	// 文件目录
+	QString					fileDir;
+
+	// 文件名称
+	QString					fileName;
+
+	// 文件大小
+	quint64 				fileSize = 0;
+
 public:
 	// constructor
 	explicit XLTaskShared(XL_TASK_ID _TaskId) noexcept;

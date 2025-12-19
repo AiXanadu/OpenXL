@@ -187,8 +187,14 @@ typedef 	x_int64_t			x_time_type;
 
 
 
+// OpenXL - 类型定义
+typedef 	x_uint64_t			XL_TASK_ID;
+
+
+
 // 宏定义 - 快捷调用
 #define		XL_MUTEX_LOCKER(_Mutex)		std::lock_guard<std::mutex>	std_mutex_locker(_Mutex)
+#define		XL_INVALID_ID			(0)
 
 
 
@@ -196,13 +202,6 @@ typedef 	x_int64_t			x_time_type;
 #define 	XL_SIZE_KB			(1024)
 #define 	XL_SIZE_MB			(XL_SIZE_KB * 1024)
 #define 	XL_SIZE_GB			(XL_SIZE_MB * 1024)
-
-
-
-// OpenXL - 类型定义
-typedef 	x_uint64_t			XL_TASK_ID;
-
-
 
 // 页面枚举 - 1级
 typedef enum XL_WINDOW_L1
